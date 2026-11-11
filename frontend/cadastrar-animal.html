@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AdotePet - Cadastro de Animal</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
 </head>
 <body>
 
@@ -13,9 +12,7 @@
   <header class="site-header">
     <div class="header-container">
       <a href="index.html" class="logo">
-        <div class="logo-badge">
-          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">pets</span>
-        </div>
+        <div class="logo-badge">🐾</div>
         <div class="logo-text">Adote<span>Pet</span></div>
       </a>
 
@@ -29,120 +26,73 @@
     </div>
   </header>
 
-  <!-- FORMULÁRIO DE CADASTRO / EDIÇÃO DE ANIMAL -->
+  <!-- FORMULÁRIO DE CADASTRO OU EDIÇÃO -->
   <main class="container">
-    <div style="margin-bottom: 1.5rem; text-align: center;">
-      <a href="animais.html" style="color: var(--primary); font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;">
-        <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
-        Voltar para animais
-      </a>
+    <div style="margin-bottom: 1rem; text-align: center;">
+      <a href="animais.html" style="color: var(--primary); font-weight: 600;">← Voltar para animais</a>
     </div>
 
     <div class="form-card">
       <div class="form-header">
         <h1 id="form-titulo">Cadastrar Animal para Adoção</h1>
-        <p>Preencha os dados do animal para disponibilizá-lo na plataforma.</p>
+        <p>Preencha os dados do animal para salvá-lo no banco de dados.</p>
       </div>
 
-      <form id="form-animal">
-        <!-- Campo: Nome do Animal -->
+      <!-- Formulário com chamada direta no onsubmit -->
+      <form id="form-animal" onsubmit="salvarAnimal(event)">
+        <!-- Nome -->
         <div class="form-group">
-          <label for="nome" class="form-label">
-            <span>Nome do animal</span>
-            <span class="required">*</span>
-          </label>
-          <input 
-            type="text" 
-            id="nome" 
-            name="nome" 
-            class="form-control" 
-            placeholder="Ex: Pipoca, Floquinho, Thor..." 
-            required
-          >
+          <label for="nome" class="form-label">Nome do animal *</label>
+          <input type="text" id="nome" class="form-control" placeholder="Ex: Pipoca, Thor..." required>
         </div>
 
         <div class="form-row">
-          <!-- Campo: Espécie -->
+          <!-- Espécie -->
           <div class="form-group">
-            <label for="especie" class="form-label">
-              <span>Espécie</span>
-              <span class="required">*</span>
-            </label>
-            <select id="especie" name="especie" class="form-control" required>
+            <label for="especie" class="form-label">Espécie *</label>
+            <select id="especie" class="form-control" required>
               <option value="">Selecione...</option>
-              <option value="cachorro">🐶 Cachorro</option>
-              <option value="gato">🐱 Gato</option>
+              <option value="cachorro">Cachorro</option>
+              <option value="gato">Gato</option>
             </select>
           </div>
 
-          <!-- Campo: Porte -->
+          <!-- Porte -->
           <div class="form-group">
-            <label for="porte" class="form-label">
-              <span>Porte</span>
-              <span class="required">*</span>
-            </label>
-            <select id="porte" name="porte" class="form-control" required>
+            <label for="porte" class="form-label">Porte *</label>
+            <select id="porte" class="form-control" required>
               <option value="">Selecione...</option>
-              <option value="pequeno">Pequeno (até 10kg)</option>
-              <option value="medio">Médio (11kg a 25kg)</option>
-              <option value="grande">Grande (mais de 25kg)</option>
+              <option value="pequeno">Pequeno</option>
+              <option value="medio">Médio</option>
+              <option value="grande">Grande</option>
             </select>
           </div>
         </div>
 
         <div class="form-row">
-          <!-- Campo: Idade -->
+          <!-- Idade -->
           <div class="form-group">
-            <label for="idade" class="form-label">
-              <span>Idade aproximada</span>
-              <span class="required">*</span>
-            </label>
-            <input 
-              type="text" 
-              id="idade" 
-              name="idade" 
-              class="form-control" 
-              placeholder="Ex: 3 meses, 1 ano, 4 anos..." 
-              required
-            >
+            <label for="idade" class="form-label">Idade aproximada *</label>
+            <input type="text" id="idade" class="form-control" placeholder="Ex: 1 ano, 4 meses..." required>
           </div>
 
-          <!-- Campo: Foto do Animal (URL) -->
+          <!-- Foto (URL) -->
           <div class="form-group">
-            <label for="foto" class="form-label">
-              <span>URL da foto</span>
-              <span style="font-size: 0.8rem; color: var(--text-muted);">(Opcional)</span>
-            </label>
-            <input 
-              type="url" 
-              id="foto" 
-              name="foto" 
-              class="form-control" 
-              placeholder="https://exemplo.com/foto.jpg"
-            >
+            <label for="foto" class="form-label">Link da Foto (URL)</label>
+            <input type="url" id="foto" class="form-control" placeholder="https://link-da-foto.jpg">
           </div>
         </div>
 
-        <!-- Campo: Descrição -->
+        <!-- Descrição -->
         <div class="form-group">
-          <label for="descricao" class="form-label">
-            <span>Descrição e história do animal</span>
-            <span class="required">*</span>
-          </label>
-          <textarea 
-            id="descricao" 
-            name="descricao" 
-            class="form-control" 
-            rows="4" 
-            placeholder="Conte se é dócil, brincalhão, se já foi castrado, vacinado ou possui alguma necessidade especial..." 
-            required
-          ></textarea>
+          <label for="descricao" class="form-label">Descrição e Histórico *</label>
+          <textarea id="descricao" class="form-control" rows="3" placeholder="Conte se é dócil, castrado ou vacinado..." required></textarea>
         </div>
 
-        <!-- Botão de Envio -->
-        <div style="margin-top: 2rem;">
-          <button type="submit" id="btn-submit-animal" class="btn btn-primary" style="width: 100%; padding: 0.9rem;">
-            Publicar Animal para Adoção
+        <!-- Botão Salvar -->
+        <div style="margin-top: 1.5rem;">
+          <button type="submit" id="btn-submit-animal" class="btn btn-primary" style="width: 100%;">
+            Salvar Animal
           </button>
         </div>
       </form>
@@ -158,9 +108,8 @@
 
   <script src="js/script.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      inicializarFormularioAnimal();
-    });
+    // Se tiver "?editar=" na URL, carrega os dados no formulário
+    document.addEventListener('DOMContentLoaded', checarModoEdicao);
   </script>
 </body>
 </html>

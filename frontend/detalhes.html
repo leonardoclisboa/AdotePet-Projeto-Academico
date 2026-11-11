@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AdotePet - Detalhes do Animal</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
 </head>
 <body>
 
@@ -13,9 +12,7 @@
   <header class="site-header">
     <div class="header-container">
       <a href="index.html" class="logo">
-        <div class="logo-badge">
-          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">pets</span>
-        </div>
+        <div class="logo-badge">🐾</div>
         <div class="logo-text">Adote<span>Pet</span></div>
       </a>
 
@@ -29,34 +26,22 @@
     </div>
   </header>
 
-  <!-- CONTEÚDO PRINCIPAL: DETALHES DO ANIMAL -->
+  <!-- DETALHES DO PET -->
   <main class="container">
     <div style="margin-bottom: 1.5rem;">
-      <a href="animais.html" style="color: var(--primary); font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;">
-        <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
-        Voltar para a lista de animais
-      </a>
+      <a href="animais.html" style="color: var(--primary); font-weight: 600;">← Voltar para a lista</a>
     </div>
 
     <div class="details-layout">
       <!-- Imagem do Pet -->
       <div class="details-image-container">
-        <img id="detalhe-foto" src="" alt="Carregando foto do animal...">
+        <img id="detalhe-foto" src="" alt="Foto do animal">
       </div>
 
-      <!-- Informações e Especificações -->
+      <!-- Informações -->
       <div class="details-info-card">
-        <div class="details-header">
-          <div style="display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.25rem 0.75rem; border-radius: var(--radius-full); background: var(--secondary-container); color: var(--on-secondary-container); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.75rem;">
-            <span class="material-symbols-outlined" style="font-size: 16px;">verified</span>
-            Disponível para Adoção
-          </div>
-          <h1 id="detalhe-nome" style="font-size: 2.4rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">
-            Carregando...
-          </h1>
-        </div>
+        <h1 id="detalhe-nome" style="font-size: 2.2rem; margin-bottom: 1rem; color: var(--text-main);">Carregando...</h1>
 
-        <!-- Grade com Espécie, Idade e Porte -->
         <div class="details-spec-grid">
           <div class="spec-box">
             <span>Espécie</span>
@@ -72,30 +57,16 @@
           </div>
         </div>
 
-        <!-- Descrição Completa -->
-        <div style="margin-bottom: 2rem;">
-          <h3 style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-main);">Sobre este amigo:</h3>
-          <p id="detalhe-descricao" style="color: var(--text-muted); font-size: 1rem; line-height: 1.7; white-space: pre-line;">
-            Carregando história e detalhes...
-          </p>
+        <div style="margin-bottom: 1.5rem;">
+          <h3 style="margin-bottom: 0.5rem;">Sobre o animal:</h3>
+          <p id="detalhe-descricao" style="color: var(--text-muted); line-height: 1.6;">-</p>
         </div>
 
-        <!-- Caixa do Responsável pelo Cadastro -->
-        <div class="responsible-box">
-          <span class="material-symbols-outlined" style="font-size: 28px; color: var(--primary);">person</span>
-          <div>
-            <p style="font-size: 0.8rem; text-transform: uppercase; font-weight: 600; color: var(--on-secondary-container);">Cadastrado por</p>
-            <p id="detalhe-responsavel" style="font-weight: 700; color: var(--text-main);">-</p>
-          </div>
-        </div>
-
-        <!-- Botão de Interesse na Adoção -->
-        <button class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem;" onclick="solicitarAdocao()">
-          <span class="material-symbols-outlined">favorite</span>
-          Quero Adotar este Pet
+        <button class="btn btn-primary" style="width: 100%;" onclick="alert('Interesse registrado! Em breve entraremos em contato.')">
+          Quero Adotar este Pet ❤️
         </button>
 
-        <!-- Ações do Dono (Editar / Excluir) se for o autor logado -->
+        <!-- Botões de Editar e Excluir gerados pelo script.js -->
         <div id="acoes-dono"></div>
       </div>
     </div>
@@ -110,14 +81,7 @@
 
   <script src="js/script.js"></script>
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      carregarDetalhesAnimal();
-    });
-
-    function solicitarAdocao() {
-      const nomePet = document.getElementById('detalhe-nome').textContent;
-      alert(`Parabéns pelo interesse em adotar o(a) ${nomePet}!\n\nEm um cenário de produção, o sistema enviaria uma notificação ao responsável com seus dados para início da entrevista de adoção.`);
-    }
+    document.addEventListener('DOMContentLoaded', carregarDetalhes);
   </script>
 </body>
 </html>
