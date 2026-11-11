@@ -1,6 +1,6 @@
 # 🐾 AdotePet - Sistema de Adoção Responsável de Animais
 
-Projeto acadêmico completo desenvolvido para a disciplina de Engenharia de Software (2º Semestre) por uma equipe de 4 estudantes.
+Projeto acadêmico completo desenvolvido para a disciplina de Engenharia de Software (2º Semestre) por uma equipe de 3 estudantes.
 
 ---
 
