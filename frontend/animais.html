@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdotePet - Animais para Adoção</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+</head>
+<body>
+
+  <!-- CABEÇALHO -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <div class="logo-badge">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">pets</span>
+        </div>
+        <div class="logo-text">Adote<span>Pet</span></div>
+      </a>
+
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link">Início</a>
+        <a href="animais.html" class="nav-link active">Animais</a>
+        <a href="sobre.html" class="nav-link">Sobre</a>
+      </nav>
+
+      <div class="header-actions" id="user-nav-actions">
+        <!-- Preenchido via script.js -->
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL: LISTAGEM E FILTROS -->
+  <main class="container">
+    <div style="margin-bottom: 2rem;">
+      <h1 style="font-size: 2.2rem; font-weight: 700; color: var(--text-main); margin-bottom: 0.5rem;">
+        Animais Disponíveis para Adoção
+      </h1>
+      <p style="color: var(--text-muted); font-size: 1rem;" id="pet-counter">
+        Consultando animais cadastrados no banco de dados...
+      </p>
+    </div>
+
+    <!-- BARRA DE FILTROS E BUSCA -->
+    <div class="filter-bar">
+      <!-- Filtro por Espécie -->
+      <div class="filter-group" id="filter-especie">
+        <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-right: 0.25rem;">Espécie:</span>
+        <button class="filter-chip active" data-filter="all">Todos</button>
+        <button class="filter-chip" data-filter="cachorro">🐶 Cães</button>
+        <button class="filter-chip" data-filter="gato">🐱 Gatos</button>
+      </div>
+
+      <!-- Filtro por Porte -->
+      <div class="filter-group" id="filter-porte">
+        <span style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted); margin-right: 0.25rem;">Porte:</span>
+        <button class="filter-chip active" data-filter="all">Todos</button>
+        <button class="filter-chip" data-filter="pequeno">Pequeno</button>
+        <button class="filter-chip" data-filter="medio">Médio</button>
+        <button class="filter-chip" data-filter="grande">Grande</button>
+      </div>
+
+      <!-- Campo de Busca por Texto -->
+      <div class="search-input-box">
+        <span class="material-symbols-outlined">search</span>
+        <input type="text" id="campo-busca" placeholder="Buscar por nome ou traço...">
+      </div>
+    </div>
+
+    <!-- GRID DOS CARDS DE ANIMAIS (CARREGADOS DO MYSQL) -->
+    <div class="pets-grid" id="pets-container">
+      <!-- Inserido dinamicamente via script.js -->
+    </div>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div>
+        <div class="logo" style="margin-bottom: 0.8rem;">
+          <div class="logo-badge">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">pets</span>
+          </div>
+          <div class="logo-text">Adote<span>Pet</span></div>
+        </div>
+        <p style="color: var(--text-muted); font-size: 0.9rem;">
+          Conectando animais que precisam de um lar a pessoas que têm amor para doar.
+        </p>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom: 0.8rem; font-weight: 600;">Links Rápidos</h4>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.9rem; color: var(--text-muted);">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="cadastrar-animal.html">Cadastrar Pet</a></li>
+          <li><a href="login.html">Login</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 style="margin-bottom: 0.8rem; font-weight: 600;">Equipe</h4>
+        <p style="font-size: 0.9rem; color: var(--text-muted);">
+          Projeto de Engenharia de Software - 2º Semestre.
+        </p>
+      </div>
+    </div>
+    <div class="footer-copy">
+      © 2026 AdotePet - Trabalho Acadêmico.
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    // Filtros e busca reativa
+    const filtrosAtuais = {
+      especie: 'all',
+      porte: 'all',
+      busca: ''
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      carregarAnimais(filtrosAtuais);
+
+      // Eventos de clique para botões de filtro de espécie
+      document.querySelectorAll('#filter-especie .filter-chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#filter-especie .filter-chip').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          filtrosAtuais.especie = btn.dataset.filter;
+          carregarAnimais(filtrosAtuais);
+        });
+      });
+
+      // Eventos de clique para botões de filtro de porte
+      document.querySelectorAll('#filter-porte .filter-chip').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#filter-porte .filter-chip').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          filtrosAtuais.porte = btn.dataset.filter;
+          carregarAnimais(filtrosAtuais);
+        });
+      });
+
+      // Campo de busca em tempo real
+      const inputBusca = document.getElementById('campo-busca');
+      inputBusca.addEventListener('input', (e) => {
+        filtrosAtuais.busca = e.target.value;
+        carregarAnimais(filtrosAtuais);
+      });
+    });
+  </script>
+</body>
+</html>

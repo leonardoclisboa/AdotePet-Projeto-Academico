@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AdotePet - Cadastro de Animal</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+</head>
+<body>
+
+  <!-- CABEÇALHO -->
+  <header class="site-header">
+    <div class="header-container">
+      <a href="index.html" class="logo">
+        <div class="logo-badge">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">pets</span>
+        </div>
+        <div class="logo-text">Adote<span>Pet</span></div>
+      </a>
+
+      <nav class="main-nav">
+        <a href="index.html" class="nav-link">Início</a>
+        <a href="animais.html" class="nav-link">Animais</a>
+        <a href="sobre.html" class="nav-link">Sobre</a>
+      </nav>
+
+      <div class="header-actions" id="user-nav-actions"></div>
+    </div>
+  </header>
+
+  <!-- FORMULÁRIO DE CADASTRO / EDIÇÃO DE ANIMAL -->
+  <main class="container">
+    <div style="margin-bottom: 1.5rem; text-align: center;">
+      <a href="animais.html" style="color: var(--primary); font-weight: 600; display: inline-flex; align-items: center; gap: 0.3rem;">
+        <span class="material-symbols-outlined" style="font-size: 18px;">arrow_back</span>
+        Voltar para animais
+      </a>
+    </div>
+
+    <div class="form-card">
+      <div class="form-header">
+        <h1 id="form-titulo">Cadastrar Animal para Adoção</h1>
+        <p>Preencha os dados do animal para disponibilizá-lo na plataforma.</p>
+      </div>
+
+      <form id="form-animal">
+        <!-- Campo: Nome do Animal -->
+        <div class="form-group">
+          <label for="nome" class="form-label">
+            <span>Nome do animal</span>
+            <span class="required">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="nome" 
+            name="nome" 
+            class="form-control" 
+            placeholder="Ex: Pipoca, Floquinho, Thor..." 
+            required
+          >
+        </div>
+
+        <div class="form-row">
+          <!-- Campo: Espécie -->
+          <div class="form-group">
+            <label for="especie" class="form-label">
+              <span>Espécie</span>
+              <span class="required">*</span>
+            </label>
+            <select id="especie" name="especie" class="form-control" required>
+              <option value="">Selecione...</option>
+              <option value="cachorro">🐶 Cachorro</option>
+              <option value="gato">🐱 Gato</option>
+            </select>
+          </div>
+
+          <!-- Campo: Porte -->
+          <div class="form-group">
+            <label for="porte" class="form-label">
+              <span>Porte</span>
+              <span class="required">*</span>
+            </label>
+            <select id="porte" name="porte" class="form-control" required>
+              <option value="">Selecione...</option>
+              <option value="pequeno">Pequeno (até 10kg)</option>
+              <option value="medio">Médio (11kg a 25kg)</option>
+              <option value="grande">Grande (mais de 25kg)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <!-- Campo: Idade -->
+          <div class="form-group">
+            <label for="idade" class="form-label">
+              <span>Idade aproximada</span>
+              <span class="required">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="idade" 
+              name="idade" 
+              class="form-control" 
+              placeholder="Ex: 3 meses, 1 ano, 4 anos..." 
+              required
+            >
+          </div>
+
+          <!-- Campo: Foto do Animal (URL) -->
+          <div class="form-group">
+            <label for="foto" class="form-label">
+              <span>URL da foto</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">(Opcional)</span>
+            </label>
+            <input 
+              type="url" 
+              id="foto" 
+              name="foto" 
+              class="form-control" 
+              placeholder="https://exemplo.com/foto.jpg"
+            >
+          </div>
+        </div>
+
+        <!-- Campo: Descrição -->
+        <div class="form-group">
+          <label for="descricao" class="form-label">
+            <span>Descrição e história do animal</span>
+            <span class="required">*</span>
+          </label>
+          <textarea 
+            id="descricao" 
+            name="descricao" 
+            class="form-control" 
+            rows="4" 
+            placeholder="Conte se é dócil, brincalhão, se já foi castrado, vacinado ou possui alguma necessidade especial..." 
+            required
+          ></textarea>
+        </div>
+
+        <!-- Botão de Envio -->
+        <div style="margin-top: 2rem;">
+          <button type="submit" id="btn-submit-animal" class="btn btn-primary" style="width: 100%; padding: 0.9rem;">
+            Publicar Animal para Adoção
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer class="site-footer">
+    <div class="footer-copy">
+      © 2026 AdotePet - Trabalho Acadêmico de Engenharia de Software.
+    </div>
+  </footer>
+
+  <script src="js/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      inicializarFormularioAnimal();
+    });
+  </script>
+</body>
+</html>
