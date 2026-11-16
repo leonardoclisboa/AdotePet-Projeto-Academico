@@ -7,83 +7,80 @@
 
 | Informação | Detalhe |
 |---|---|
-| **Nome do Sistema** | **AdotePet** — Plataforma Cidadã de Adoção Responsável de Animais |
+| **Nome do Sistema** | **AdotePet** — Plataforma de Adoção Responsável de Animais |
 | **Curso** | Bacharelado em Engenharia de Software |
 | **Semestre Letivo** | 2º Semestre |
-| **Componente Curricular** | Projeto Integrador / Desenvolvimento Web Full Stack e Bancos de Dados |
-| **Equipe de Desenvolvimento** | • Integrante 1: Front-End, Semântica HTML5 & Responsividade CSS3<br>• Integrante 2: Back-End, Node.js & Arquitetura RESTful<br>• Integrante 3: Engenharia de Dados, Modelagem DDL & MySQL<br>• Integrante 4: Testes de Software, Segurança & Validação do CRUD |
+| **Componente Curricular** | Projeto Integrador / Desenvolvimento Web Full Stack e Banco de Dados |
+| **Ambiente de Execução** | 100% Local (`localhost:3000` / MySQL `localhost:3306`) |
+| **Equipe de Desenvolvimento** | • Pedro Sohn: Front-End, Semântica HTML5 & Estilização CSS3<br>• João Gabriel: Back-End, Node.js & Rotas Express<br>• Leonardo Lisboa: Banco de Dados MySQL, Regras de Negócio e Apresentação |
 
 ---
 
 ## 2. Visão Geral e Escopo do Sistema
 
 ### 2.1. Objetivo Acadêmico
-Desenvolver uma aplicação Web Full Stack completa e funcional aplicando os fundamentos de Engenharia de Software adquiridos no 2º semestre, contemplando:
-1. Construção de interfaces ricas e acessíveis em **HTML5**;
-2. Estilização modular e responsiva em **CSS3 puro** seguindo o Design System pré-estabelecido;
-3. Criação de API REST em **JavaScript (Node.js/Express)** com controle de estados e conexões assíncronas;
-4. Modelagem relacional e persistência de dados em **MySQL** através do driver `mysql2` com proteção ativa contra vulnerabilidades (SQL Injection e exposição de credenciais).
+Desenvolver uma aplicação Web Full Stack funcional, limpa e didática aplicando os fundamentos de Engenharia de Software adquiridos no 2º semestre, contemplando os quatro artefatos obrigatórios:
+1. **Formulários de cadastro em HTML5**: estruturação semântica, validações nativas e seletores intuitivos;
+2. **Estilização em CSS3**: design minimalista (*Warm Shelter Minimal*), botões arredondados, paleta de cores verde/branco/bege e layout responsivo;
+3. **Backend em JavaScript com Node.js e Express**: criação de rotas REST locais e conexão direta com o MySQL através do driver `mysql2`;
+4. **Script SQL/DDL**: criação do banco de dados relacional `adotepet`, tabelas com chaves primárias e estrangeiras, integridade referencial e dados iniciais de teste (*seeds*).
+
+---
 
 ### 2.2. Requisitos do Sistema
 
 #### Requisitos Funcionais (RF)
-- **RF01 — Cadastro de Usuário:** O sistema deve permitir o cadastro de novos tutores e voluntários com nome, e-mail e senha com confirmação.
-- **RF02 — Autenticação de Usuário:** O sistema deve autenticar o usuário validando o e-mail e o hash da senha cadastrada.
-- **RF03 — Cadastro de Animais (Create):** Usuários autenticados devem poder cadastrar animais informando nome, espécie (cão ou gato), idade, porte (pequeno, médio ou grande), descrição e link de foto.
-- **RF04 — Listagem de Animais (Read):** Qualquer visitante deve poder visualizar a lista de animais disponíveis para adoção, carregada diretamente do banco de dados.
-- **RF05 — Filtragem e Busca de Animais:** A listagem deve permitir filtros combinados por espécie, porte e pesquisa textual por nome.
-- **RF06 — Detalhamento do Pet (Read):** O sistema deve exibir página detalhada de cada animal com dados completos e identificação do tutor responsável.
-- **RF07 — Alteração de Dados (Update):** O responsável pelo cadastro do animal deve poder editar suas informações a qualquer momento.
-- **RF08 — Exclusão de Animal (Delete):** O responsável pelo cadastro deve poder excluir o registro do animal da base de dados com confirmação de segurança.
+- **RF01 — Cadastro de Usuário:** O sistema permite o cadastro de novos usuários com nome completo, e-mail e senha.
+- **RF02 — Login e Autenticação:** O sistema valida e-mail e senha diretamente no banco de dados e salva a sessão ativa no navegador (`localStorage`).
+- **RF03 — Cadastro de Animais (Create):** Apenas usuários logados podem cadastrar animais informando nome, espécie (cão ou gato), porte (pequeno, médio ou grande), idade aproximada, foto e descrição. O pet fica vinculado ao ID do usuário que o cadastrou.
+- **RF04 — Consulta de Animais (Read):** Visitantes e usuários podem visualizar a lista completa de animais disponíveis para adoção, carregada do MySQL.
+- **RF05 — Filtragem de Animais:** A listagem permite filtrar os animais por espécie (Todos, Cães ou Gatos) de forma simples e direta.
+- **RF06 — Detalhes do Animal (Read):** Exibição de página detalhada com foto, espécie, porte, idade e história do animal.
+- **RF07 — Alteração de Dados (Update):** Somente o usuário que cadastrou o pet tem permissão para editar suas informações.
+- **RF08 — Exclusão de Animal (Delete):** Somente o usuário que cadastrou o pet tem permissão para excluí-lo do sistema com confirmação de segurança.
 
-#### Requisitos Não Funcionais (RNF)
-- **RNF01 — Segurança de Senhas:** Senhas devem ser armazenadas exclusivamente em formato de hash criptográfico unidirecional via algoritmo `bcrypt` com fator de custo (*salt rounds*) igual a 10.
-- **RNF02 — Segurança de Dados (SQL Injection):** Todas as consultas ao banco MySQL devem empregar consultas preparadas (*Prepared Statements*) com parâmetros sanitizados.
-- **RNF03 — Isolamento de Configurações:** Nenhuma credencial de banco ou porta de rede deve estar *hardcoded* no código público, utilizando variáveis de ambiente via arquivo `.env`.
-- **RNF04 — Responsividade:** O layout deve se adaptar fluidamente a resoluções de telas móveis (Smartphones), intermediárias (Tablets) e desktops.
-- **RNF05 — Desempenho e Reuso de Conexões:** O backend deve utilizar um *Connection Pool* para gerenciar conexões concorrentes com o banco de dados.
+#### Requisitos Não Funcionais (RNF) e Regras de Negócio
+- **RNF01 — Arquitetura 100% Local:** A API e o banco de dados rodam exclusivamente na máquina local (`localhost`), sem dependência de serviços em nuvem ou internet.
+- **RNF02 — Segurança contra SQL Injection:** Uso de consultas preparadas (*Prepared Statements*) com marcadores `?` em todas as operações no MySQL.
+- **RNF03 — Controle de Acesso por Dono (Regra de Negócio):** 
+  - No Front-End: os botões de **Editar** e **Excluir** só aparecem se o usuário logado for o dono do animal (`usuario_logado.id === animal.usuario_id`).
+  - No Back-End: as rotas `PUT` e `DELETE` verificam no banco se o solicitante é o responsável pelo cadastro, retornando status `403 Forbidden` caso contrário.
+- **RNF04 — Código Limpo e Acessível:** Estruturado sem complexidades excessivas, permitindo que estudantes do 2º semestre compreendam e expliquem cada linha de código com clareza.
+- **RNF05 — Isolamento de Configurações:** Credenciais de conexão do MySQL organizadas em arquivo `.env`.
 
 ---
 
 ## 3. Arquitetura de Software
 
-O sistema adota o padrão de **Arquitetura em Três Camadas (3-Tier Architecture)** desacoplada, utilizando o modelo cliente-servidor com comunicação assíncrona baseada em REST e JSON.
+O sistema adota o padrão de **Arquitetura em Três Camadas (3-Tier)** desacoplada:
 
 ```mermaid
 flowchart TD
-    subgraph Cliente["Camada de Apresentação (Front-End)"]
+    subgraph Cliente["1. Camada de Apresentação (Front-End)"]
         UI["HTML5 Semântico + CSS3 Responsivo"]
-        JS["JavaScript ES6 (Fetch API / DOM / localStorage)"]
+        JS["JavaScript (Fetch API / DOM / localStorage)"]
         UI <--> JS
     end
 
-    subgraph Servidor["Camada de Aplicação (Back-End)"]
-        EXP["Servidor Express (Node.js)"]
-        ROUT_A["Rotas /api/animais (CRUD)"]
-        ROUT_U["Rotas /api/usuarios (Auth)"]
-        BCRYPT["Módulo de Criptografia (bcryptjs)"]
+    subgraph Servidor["2. Camada de Aplicação (Back-End)"]
+        EXP["Servidor Express (Node.js na porta 3000)"]
+        ROUT_A["Rotas /api/animais (CRUD + Checagem de Dono)"]
+        ROUT_U["Rotas /api/usuarios (Cadastro e Login)"]
         EXP --> ROUT_A
         EXP --> ROUT_U
-        ROUT_U --> BCRYPT
     end
 
-    subgraph Dados["Camada de Persistência (Banco de Dados)"]
+    subgraph Dados["3. Camada de Persistência (Banco de Dados)"]
         POOL["Pool de Conexões (mysql2/promise)"]
-        MYSQL[("Banco de Dados MySQL: adotepet")]
+        MYSQL[("MySQL na porta 3306: adotepet")]
         POOL <--> MYSQL
     end
 
-    JS -- "Requisições HTTP / JSON (REST)" --> EXP
-    EXP -- "Respostas HTTP / JSON (Status Codes)" --> JS
+    JS -- "Requisições HTTP (GET, POST, PUT, DELETE)" --> EXP
+    EXP -- "Respostas JSON (Dados e Mensagens)" --> JS
     ROUT_A <--> POOL
     ROUT_U <--> POOL
 ```
-
-### 3.1. Justificativa das Tecnologias
-- **HTML5 & CSS3 Puros:** Atende rigorosamente à diretriz pedagógica de não utilizar frameworks complexos (como React ou Angular), consolidando os fundamentos de manipulação de DOM e estilização nativa.
-- **Node.js + Express:** Permite utilizar uma única linguagem (JavaScript) em toda a stack, viabilizando rotas concisas, middlewares eficientes e alta produtividade.
-- **MySQL2/Promise:** Driver otimizado para Node.js com suporte nativo a `async/await`, permitindo código assíncrono limpo sem encadeamento de *callbacks* (*callback hell*).
-- **BcryptJS:** Biblioteca padrão da indústria para hashing de senhas com *salting*, prevenindo ataques de dicionário e *rainbow tables*.
 
 ---
 
@@ -93,14 +90,14 @@ flowchart TD
 
 ```mermaid
 erDiagram
-    USUARIOS ||--o{ ANIMAIS : "cadastra e gerencia"
+    USUARIOS ||--o{ ANIMAIS : "cadastra e gerencia (1:N)"
     
     USUARIOS {
         int id PK "Auto Increment"
-        varchar(100) nome "Nome completo do usuário"
+        varchar(100) nome "Nome do usuário"
         varchar(100) email UK "E-mail único de acesso"
-        varchar(255) senha "Hash criptográfico bcrypt"
-        timestamp criado_em "Timestamp de registro"
+        varchar(100) senha "Senha de acesso"
+        timestamp criado_em "Data do cadastro"
     }
 
     ANIMAIS {
@@ -109,9 +106,9 @@ erDiagram
         varchar(20) especie "cachorro ou gato"
         varchar(50) idade "Idade aproximada"
         varchar(20) porte "pequeno, medio ou grande"
-        text descricao "Descrição detalhada e temperamento"
+        text descricao "Descrição e temperamento"
         text foto "URL da foto do animal"
-        int usuario_id FK "Chave estrangeira -> usuarios.id"
+        int usuario_id FK "Referência ao dono (usuarios.id)"
         timestamp criado_em "Data de publicação"
     }
 ```
@@ -119,138 +116,127 @@ erDiagram
 ### 4.2. Dicionário de Dados
 
 #### Tabela: `usuarios`
-| Campo | Tipo de Dado | Nulo? | Chave | Descrição e Regras |
+| Coluna | Tipo | Nulo? | Chave | Descrição |
 |---|---|---|---|---|
-| `id` | `INT` | Não | **PK** | Identificador único e sequencial do usuário (`AUTO_INCREMENT`) |
+| `id` | `INT` | Não | **PK** | Identificador único sequencial (`AUTO_INCREMENT`) |
 | `nome` | `VARCHAR(100)` | Não | - | Nome completo do usuário tutor |
-| `email` | `VARCHAR(100)` | Não | **UK** | E-mail corporativo ou pessoal; possui índice único (`UNIQUE`) |
-| `senha` | `VARCHAR(255)` | Não | - | String contendo o hash gerado pelo algoritmo bcrypt (custo 10) |
+| `email` | `VARCHAR(100)` | Não | **UK** | E-mail do usuário; possui restrição de unicidade (`UNIQUE`) |
+| `senha` | `VARCHAR(100)` | Não | - | Senha de acesso cadastrada |
 | `criado_em` | `TIMESTAMP` | Sim | - | Data e hora automática do cadastro (`DEFAULT CURRENT_TIMESTAMP`) |
 
 #### Tabela: `animais`
-| Campo | Tipo de Dado | Nulo? | Chave | Descrição e Regras |
+| Coluna | Tipo | Nulo? | Chave | Descrição |
 |---|---|---|---|---|
-| `id` | `INT` | Não | **PK** | Identificador único e sequencial do animal (`AUTO_INCREMENT`) |
-| `nome` | `VARCHAR(100)` | Não | - | Nome fantasia de registro do pet |
-| `especie` | `VARCHAR(20)` | Não | - | Classificação taxonômica simplificada (`cachorro` ou `gato`) |
-| `idade` | `VARCHAR(50)` | Não | - | Idade aproximada (ex: `1 ano`, `6 meses`, `Filhote`) |
-| `porte` | `VARCHAR(20)` | Não | - | Porte físico do animal (`pequeno`, `medio`, `grande`) |
-| `descricao` | `TEXT` | Não | - | Texto detalhado sobre temperamento, histórico de resgate e saúde |
-| `foto` | `TEXT` | Não | - | URL externa ou caminho estático da fotografia |
-| `usuario_id` | `INT` | Não | **FK** | Referência à tabela `usuarios(id)` com `ON DELETE CASCADE` |
-| `criado_em` | `TIMESTAMP` | Sim | - | Data e hora de publicação na plataforma |
+| `id` | `INT` | Não | **PK** | Identificador único sequencial (`AUTO_INCREMENT`) |
+| `nome` | `VARCHAR(100)` | Não | - | Nome do animal |
+| `especie` | `VARCHAR(20)` | Não | - | Espécie: `cachorro` ou `gato` |
+| `idade` | `VARCHAR(50)` | Não | - | Idade aproximada (ex: `1 ano`, `6 meses`) |
+| `porte` | `VARCHAR(20)` | Não | - | Porte do animal: `pequeno`, `medio` ou `grande` |
+| `descricao` | `TEXT` | Não | - | Histórico de resgate, comportamento e vacinas |
+| `foto` | `TEXT` | Não | - | Link/URL da fotografia do animal |
+| `usuario_id` | `INT` | Não | **FK** | Referência ao tutor em `usuarios(id)` com `ON DELETE CASCADE` |
+| `criado_em` | `TIMESTAMP` | Sim | - | Data e hora de publicação do registro |
 
 ---
 
 ## 5. Implementação das 4 Operações CRUD
 
-A tabela a seguir sumariza a API REST desenvolvida no arquivo `backend/routes/animais.js`:
+A API foi desenvolvida em `backend/routes/animais.js` seguindo o padrão RESTful:
 
-| Operação CRUD | Método HTTP | Endpoint | Payload de Entrada (JSON) | Código de Sucesso | Ação no MySQL |
+| Operação CRUD | Método HTTP | Rota Local | Entrada de Dados | Resposta HTTP | Ação Executada no MySQL |
 |---|---|---|---|---|---|
-| **CREATE** (Cadastrar) | `POST` | `/api/animais` | `{"nome", "especie", "idade", "porte", "descricao", "foto", "usuario_id"}` | `201 Created` | `INSERT INTO animais (...) VALUES (?, ...)` |
-| **READ** (Consultar Todos) | `GET` | `/api/animais` | Parâmetros via Query String: `?especie=&porte=&busca=` | `200 OK` | `SELECT a.*, u.nome FROM animais a JOIN usuarios u ...` |
-| **READ** (Consultar por ID) | `GET` | `/api/animais/:id` | Parâmetro de rota: `:id` | `200 OK` | `SELECT a.*, u.nome FROM animais WHERE a.id = ?` |
-| **UPDATE** (Alterar) | `PUT` | `/api/animais/:id` | `{"nome", "especie", "idade", "porte", "descricao", "foto"}` | `200 OK` | `UPDATE animais SET nome = ?, ... WHERE id = ?` |
-| **DELETE** (Excluir) | `DELETE` | `/api/animais/:id` | Parâmetro de rota: `:id` | `200 OK` | `DELETE FROM animais WHERE id = ?` |
+| **CREATE** (Cadastrar) | `POST` | `/api/animais` | JSON no Body com dados do pet e `usuario_id` | `201 Created` | `INSERT INTO animais (...) VALUES (?, ...)` |
+| **READ** (Listar Todos) | `GET` | `/api/animais` | Nenhuma (busca geral) | `200 OK` | `SELECT * FROM animais ORDER BY id DESC` |
+| **READ** (Detalhes) | `GET` | `/api/animais/:id` | Parâmetro de rota `:id` | `200 OK` | `SELECT * FROM animais WHERE id = ?` |
+| **UPDATE** (Alterar) | `PUT` | `/api/animais/:id` | JSON no Body com novos dados e `usuario_id` | `200 OK` | `UPDATE animais SET ... WHERE id = ?` *(após checar dono)* |
+| **DELETE** (Excluir) | `DELETE` | `/api/animais/:id` | Query string `?usuario_id=` | `200 OK` | `DELETE FROM animais WHERE id = ?` *(após checar dono)* |
 
 ---
 
-## 6. Padrões de Segurança Implementados
+## 6. Padrões de Segurança e Regras de Negócio
 
-### 6.1. Prevenção Contra Injeção de SQL (SQL Injection)
-O sistema não utiliza concatenação de strings em nenhuma instrução SQL. Todos os parâmetros recebidos do usuário passam por consultas parametrizadas (*Prepared Statements*):
+### 6.1. Proteção Contra SQL Injection (Prepared Statements)
+O backend não concatena strings diretamente nos comandos SQL. Todas as instruções utilizam o marcador `?`:
 ```javascript
-// Exemplo implementado no backend:
 const sql = 'INSERT INTO animais (nome, especie, idade, porte, descricao, foto, usuario_id) VALUES (?, ?, ?, ?, ?, ?, ?)';
-await pool.query(sql, [nome, especie, idade, porte, descricao, fotoFinal, idUsuario]);
+await pool.query(sql, [nome, especie, idade, porte, descricao, fotoFinal, usuario_id]);
 ```
+O driver `mysql2` trata os dados antes de enviá-los ao MySQL, impedindo injeção de comandos maliciosos.
 
-### 6.2. Criptografia Segura de Senhas
-A senha do usuário jamais trafega para o banco em texto puro. Ao cadastrar:
-```javascript
-const saltRounds = 10;
-const senhaHash = await bcrypt.hash(senha, saltRounds);
-// O hash de 60 caracteres resultante é persistido
-```
-Na autenticação, o método `bcrypt.compare(senhaInformada, usuario.senha)` valida a compatibilidade de forma segura contra ataques de temporização.
-
-### 6.3. Isolamento de Credenciais (.env)
-A conexão com o MySQL não expõe dados no repositório. O arquivo `.env` gerencia credenciais locais:
-```env
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=
-DB_NAME=adotepet
-DB_PORT=3306
-```
+### 6.2. Regra de Negócio: Controle de Dono do Registro
+Para impedir que um usuário ou visitante apague ou altere pets alheios:
+- **No Front-End (`frontend/js/script.js`):**
+  ```javascript
+  const usuario = obterUsuarioLogado();
+  if (usuario && usuario.id === animal.usuario_id) {
+    // Exibe botões de Editar e Excluir
+  } else {
+    // Oculta os botões para visitantes e outros usuários
+  }
+  ```
+- **No Back-End (`backend/routes/animais.js`):**
+  ```javascript
+  const [animais] = await pool.query('SELECT * FROM animais WHERE id = ?', [id]);
+  if (usuario_id && animais[0].usuario_id != usuario_id) {
+    return res.status(403).json({ mensagem: 'Você só pode excluir animais cadastrados por você!' });
+  }
+  ```
 
 ---
 
-## 7. Roteiro de Apresentação da Equipe (Divisão de Fala)
+## 7. Roteiro de Apresentação da Equipe (Divisão entre os 3 Alunos)
 
-Para uma apresentação acadêmica coesa de 10 a 15 minutos, sugerimos a divisão do conteúdo entre os 4 estudantes:
+Uma sugestão prática de apresentação de 10 a 12 minutos dividida igualmente entre os 3 integrantes:
 
 ```mermaid
 flowchart LR
-    E1["Integrante 1<br><b>Front-End & CSS3</b><br>• HTML5 Semântico<br>• Warm Shelter Minimal<br>• Responsividade"] --> E2["Integrante 2<br><b>Back-End & API</b><br>• Node.js & Express<br>• Rotas RESTful<br>• Middlewares"]
-    E2 --> E3["Integrante 3<br><b>Banco & Dados</b><br>• Modelo Relacional<br>• Script DDL MySQL<br>• Integridade Referencial"]
-    E3 --> E4["Integrante 4<br><b>Segurança & Demonstração</b><br>• Prepared Statements<br>• Hash Bcrypt<br>• Teste do CRUD ao Vivo"]
+    A1["1. Pedro Sohn<br><b>Front-End & CSS3</b><br>• HTML5 Semântico<br>• Warm Shelter Minimal<br>• Responsividade"] --> A2["2. João Gabriel<br><b>Back-End & Node.js</b><br>• Servidor Express<br>• Rotas do CRUD<br>• Fetch API"]
+    A2 --> A3["3. Leonardo Lisboa<br><b>MySQL & Demonstração</b><br>• Script DDL Workbench<br>• Permissão de Dono<br>• Teste do CRUD ao Vivo"]
 ```
 
-### Roteiro Detalhado por Integrante:
+### O que cada integrante deve falar:
 
-#### 🗣️ Integrante 1 — Apresentação Visual e Front-End (3 minutos)
-- **Tópicos:**
-  - Introdução do tema social: conectar animais resgatados a lares amorosos;
-  - Explicação da identidade visual *Warm Shelter Minimal*: tons verde laurel (`#52B788`), bege/linho (`#FAF8F5`) e botões arredondados que transmitem acolhimento;
-  - Apresentação da responsividade do CSS3 (Flexbox e Grid) funcionando em dispositivos móveis e desktop;
-  - Semântica e acessibilidade dos formulários HTML5 (`required`, tipos específicos e tags label).
+#### 🗣️ 1. Pedro Sohn — Apresentação da Interface e Front-End (3 a 4 min)
+- Apresentar o propósito social do AdotePet;
+- Explicar o HTML5 semântico dos formulários (`required`, inputs tipados de e-mail e seleção de espécie/porte);
+- Explicar a identidade visual em CSS3 (*Warm Shelter Minimal*): cores verde botânico (`#52B788`), bege/linho (`#FAF8F5`) e botões arredondados com layout responsivo para celular e computador.
 
-#### 🗣️ Integrante 2 — Arquitetura Back-End e Rotas (3 minutos)
-- **Tópicos:**
-  - Explicação do servidor HTTP estruturado em Node.js com o framework Express;
-  - Organização modular da pasta `backend/` separando `server.js`, `database.js` e a pasta `routes/`;
-  - Demonstração dos códigos de status HTTP apropriados (`200 OK`, `201 Created`, `400 Bad Request`, `404 Not Found`, `500 Server Error`);
-  - Explicação da integração com o Front-End através da `Fetch API` assíncrona.
+#### 🗣️ 2. João Gabriel — Arquitetura Back-End e Rotas (3 a 4 min)
+- Explicar que a aplicação roda sobre o **Node.js** com framework **Express** na porta 3000 de forma 100% local;
+- Mostrar a estrutura de pastas organizada (`server.js`, `database.js` e pasta `routes/`);
+- Explicar as 4 rotas do CRUD de animais (`POST`, `GET`, `PUT`, `DELETE`) e como o Front-End se comunica com elas via `fetch()`.
 
-#### 🗣️ Integrante 3 — Engenharia de Dados e MySQL Workbench (3 minutos)
-- **Tópicos:**
-  - Demonstração do Script DDL `database/adotepet.sql` importado e executado no MySQL Workbench;
-  - Explicação da modelagem das tabelas `usuarios` e `animais`;
-  - Justificativa da chave estrangeira `usuario_id` com a regra `ON DELETE CASCADE` (caso um usuário seja removido, seus animais cadastrados são tratados com integridade);
-  - Demonstração dos dados de teste inseridos (*seed data*).
-
-#### 🗣️ Integrante 4 — Segurança e Demonstração Prática do CRUD (4 minutos)
-- **Tópicos:**
-  - Explicação das medidas de segurança adotadas: *Prepared Statements* (contra SQL Injection) e *Bcrypt* (proteção de senhas);
-  - **Demonstração Prática ao Vivo perante o Professor:**
-    1. **Create:** Cadastrar um novo pet pelo formulário e mostrar a inclusão;
-    2. **Read:** Mostrar o pet renderizado na tela de listagem e demonstrar o filtro por espécie/porte;
-    3. **Update:** Abrir os detalhes do pet cadastrado, clicar em *Editar*, alterar um dado e salvar;
-    4. **Delete:** Clicar em *Excluir*, confirmar no modal do navegador e comprovar a remoção imediata da listagem e do MySQL.
+#### 🗣️ 3. Leonardo Lisboa — Banco de Dados, Regras de Negócio e Demonstração ao Vivo (4 a 5 min)
+- Abrir o **MySQL Workbench** e mostrar o banco `adotepet`, a tabela `usuarios`, a tabela `animais` e a chave estrangeira com `ON DELETE CASCADE`;
+- Explicar o uso de *Prepared Statements* contra SQL Injection e a regra de que apenas o dono pode editar ou excluir o pet;
+- **Executar a demonstração prática ao vivo perante o professor:**
+  1. Mostrar a lista carregada do banco e os botões de filtro (Cães / Gatos);
+  2. Fazer login com `admin@adotepet.com` / `12345678`;
+  3. **CREATE:** Cadastrar um novo pet e mostrar a mensagem de sucesso;
+  4. **READ:** Abrir a página de detalhes do pet recém-cadastrado;
+  5. **UPDATE:** Clicar em *Editar*, alterar a idade do animal e salvar;
+  6. **DELETE:** Clicar em *Excluir*, confirmar no alerta e mostrar que o pet sumiu da listagem e do MySQL Workbench.
 
 ---
 
 ## 8. Matriz de Testes de Aceitação do CRUD
 
-| ID | Cenário de Teste | Ação Executada | Resultado Esperado | Status |
-|---|---|---|---|---|
-| **TC01** | Validação de Entrada | Enviar cadastro de animal com campos vazios | Formulário bloqueia o envio pelo HTML5 e o backend retorna status `400` | **Aprovado** ✅ |
-| **TC02** | Operação CREATE | Preencher dados válidos e submeter formulário | Registro gravado no MySQL; retorna `201 Created` e exibe notificação Toast | **Aprovado** ✅ |
-| **TC03** | Operação READ Geral | Acessar página `animais.html` | Requisição `GET /api/animais` popula os cards com foto, idade e porte | **Aprovado** ✅ |
-| **TC04** | Filtros de Pesquisa | Clicar no filtro de gatos ou cães | API filtra no banco com cláusula `WHERE especie = ?` e atualiza a visualização | **Aprovado** ✅ |
-| **TC05** | Operação READ Específica | Clicar em "Ver Detalhes" de um card | Página carrega dados completos e realiza `JOIN` com o usuário tutor | **Aprovado** ✅ |
-| **TC06** | Operação UPDATE | Editar porte/descrição de animal cadastrado | Executa `PUT /api/animais/:id` com prepared statement; dados atualizados no banco | **Aprovado** ✅ |
-| **TC07** | Operação DELETE | Confirmar exclusão na tela de detalhes | Executa `DELETE /api/animais/:id`; registro é removido e página redireciona | **Aprovado** ✅ |
-| **TC08** | Integridade de Senhas | Verificar coluna `senha` no MySQL Workbench | Senha exibida sob forma de hash ilegível `$2a$10$...` | **Aprovado** ✅ |
+| Teste | Ação Executada | Resultado Esperado | Status |
+|---|---|---|---|
+| **CREATE** | Cadastrar animal logado como usuário tutor | Registro salvo no MySQL; redireciona para a lista | **Aprovado** ✅ |
+| **READ** | Acessar a página `animais.html` | Mostra todos os animais salvos no banco de dados | **Aprovado** ✅ |
+| **FILTRO** | Clicar em "Somente Cães" ou "Somente Gatos" | Filtra os cards na tela instantaneamente | **Aprovado** ✅ |
+| **UPDATE** | Dono do pet editar informações e salvar | Atualiza os campos no MySQL com o método `PUT` | **Aprovado** ✅ |
+| **DELETE** | Dono do pet clicar em excluir e confirmar | Remove o pet do MySQL com o método `DELETE` | **Aprovado** ✅ |
+| **SEGURANÇA** | Visitante deslogado abrir detalhes do animal | Botões de Editar e Excluir ficam ocultos | **Aprovado** ✅ |
+| **SEGURANÇA** | Usuário tentar editar animal cadastrado por outro | Sistema bloqueia com mensagem de permissão negada | **Aprovado** ✅ |
 
 ---
 
 ## 9. Conclusão Acadêmica
 
-O desenvolvimento do sistema **AdotePet** consolida os pilares fundamentais da Engenharia de Software no ciclo inicial de formação:
-- Adoção de arquitetura em camadas clara e desacoplada;
-- Atendimento estrito aos requisitos funcionais e não funcionais estabelecidos;
-- Aplicação de boas práticas de segurança, tipagem relacional e integridade de dados;
-- Criação de uma solução socialmente relevante com interface moderna e amigável.
+O projeto **AdotePet** atende de ponta a ponta aos requisitos pedagógicos do 2º semestre de Engenharia de Software:
+- Código-fonte limpo, bem comentado e de fácil manutenção;
+- Aplicação das 4 operações do CRUD completas e funcionais;
+- Separação real de responsabilidades entre Front-End, Back-End e Banco de Dados;
+- Regras de negócio sólidas com controle de permissão de dono e proteção ativa contra SQL Injection.
