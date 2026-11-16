@@ -76,7 +76,6 @@ AdotePet/
 ├── .gitignore                      # Arquivos ignorados pelo Git (node_modules, .env)
 ├── package.json                    # Dependências e scripts do Node.js
 ├── DOCUMENTACAO_TECNICA.md         # Documentação técnica completa do projeto
-├── GUIA_EXPLICACAO_PROFESSOR.md    # Roteiro de fala e guia para a apresentação
 └── README.md                       # Apresentação do repositório
 ```
 
